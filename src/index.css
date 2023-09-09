@@ -1,7 +1,20 @@
+@font-face {
+  font-family: 'Neue';
+  src: url('/public/assets/fonts/NeueMontreal-Bold.otf'),
+    url('/public/assets/fonts/NeueMontreal-BoldItalic.otf'),
+    url('/public/assets/fonts/NeueMontreal-Italic.otf'),
+    url('/public/assets/fonts/NeueMontreal-Light.otf'),
+    url('/public/assets/fonts/NeueMontreal-LightItalic.otf'),
+    url('/public/assets/fonts/NeueMontreal-Medium.otf'),
+    url('/public/assets/fonts/NeueMontreal-MediumItalic.otf'),
+    url('/public/assets/fonts/NeueMontreal-Regular.otf');
+}
+
 *,
 *::before,
 *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
