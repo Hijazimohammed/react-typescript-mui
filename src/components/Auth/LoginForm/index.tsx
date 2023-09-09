@@ -15,6 +15,7 @@ const LoginForm = () => {
         alignItems: 'center',
         padding: '0 30px',
         marginBottom: '2rem',
+        marginTop: '70px',
       }}>
       <Box
         sx={{

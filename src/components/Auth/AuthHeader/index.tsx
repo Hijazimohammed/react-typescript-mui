@@ -7,8 +7,8 @@ const AuthHeader = () => {
         flexGrow: 1,
       }}>
       <AppBar
-        sx={{ background: 'white', boxShadow: 'none', color: '#000' }}
-        position='static'>
+        position='fixed'
+        sx={{ background: 'white', boxShadow: 'none', color: '#000' }}>
         <Toolbar>
           <Box
             sx={{
