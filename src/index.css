@@ -18,3 +18,13 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+a {
+  text-decoration: none;
+}
+
+input::placeholder {
+  color: #001e00;
+}
+.link_redirect {
+  color: #14a800;
+}
