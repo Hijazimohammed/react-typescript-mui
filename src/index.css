@@ -28,3 +28,13 @@ input::placeholder {
 .link_redirect {
   color: #14a800;
 }
+.error {
+  color: red;
+  padding-top: 0.5rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.6px;
+  text-align: left;
+  width: 100%;
+}

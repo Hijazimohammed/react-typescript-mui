@@ -9,20 +9,50 @@ import MenuItem from '@mui/material/MenuItem';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { PATHS } from '../../../constants/Paths';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SignupSchema } from '../../../validation';
+import useGetCountries from '../../../hooks/useGetCountries';
+import { ICountry } from '../../../@types/country';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { IUser } from '../../../@types/auth';
+import { useAppDispatch } from '../../../redux/store';
+import { signUp } from '../../../redux/slices/AuthSlice';
+import bcrypt from 'bcryptjs-react';
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [country, setCountry] = useState(String);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { countries } = useGetCountries();
+
   const handleShowPassword = (): void => {
     setShowPassword(!showPassword);
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setCountry(event.target.value as string);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(SignupSchema),
+  });
+
+  const onSubmit = (body: IUser) => {
+    const salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(body.password, salt);
+    const { agree, ...rest } = body;
+    rest.password = hash;
+    dispatch(signUp(rest));
+    navigate('/', { replace: true });
   };
+
   return (
     <Box
       sx={{
@@ -35,6 +65,8 @@ const SignUpForm = () => {
         marginTop: '70px',
       }}>
       <Box
+        component={'form'}
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           minWidth: '40%',
           width: '50%',
@@ -124,105 +156,112 @@ const SignUpForm = () => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <Input
-            placeholder='First name'
+          <Box
             sx={{
               width: '47%',
-              border: '1px solid #e4ebe4',
-              color: '#001E00',
-              '&:hover': {
-                borderColor: '#cbcecb',
-              },
-            }}
-          />
-          <Input
-            placeholder='Last name'
-            sx={{
-              width: '47%',
-              border: '1px solid #e4ebe4',
-              color: '#001E00',
-              '&:hover': {
-                borderColor: '#cbcecb',
-              },
-            }}
-          />
-        </Box>
-        <Input
-          placeholder='Work email address'
-          sx={{
-            width: '100%',
-            border: '1px solid #e4ebe4',
-            color: '#001E00',
-            '&:hover': {
-              borderColor: '#cbcecb',
-            },
-          }}
-        />
-        <Input
-          type={showPassword ? 'text' : 'password'}
-          sx={{
-            width: '100%',
-            border: '1px solid #e4ebe4',
-            color: '#001E00',
-            '&:hover': {
-              borderColor: '#cbcecb',
-            },
-          }}
-          placeholder='Password (8 or more characters)'
-          endDecorator={
-            showPassword ? (
-              <VisibilityIcon
-                onClick={handleShowPassword}
-                sx={{ color: '#001E00', width: '1.2rem' }}
-              />
-            ) : (
-              <VisibilityOffIcon
-                onClick={handleShowPassword}
-                sx={{ color: '#001E00', width: '1.2rem' }}
-              />
-            )
-          }
-        />
-        <Select
-          sx={{
-            width: '100%',
-            border: '1px solid #e4ebe4',
-            color: '#001E00',
-            '&:hover': {
-              borderColor: '#cbcecb',
-            },
-            '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-              {
-                padding: '10px 14px',
-              },
-            '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
-              {
+            }}>
+            <Input
+              {...register('firstName')}
+              placeholder='First name'
+              sx={{
+                border: '1px solid #e4ebe4',
                 color: '#001E00',
+                '&:hover': {
+                  borderColor: '#cbcecb',
+                },
+              }}
+            />
+            {errors.firstName?.message && (
+              <p className='error'>{errors.firstName?.message}</p>
+            )}
+          </Box>
+          <Box
+            sx={{
+              width: '47%',
+            }}>
+            <Input
+              placeholder='Last name'
+              {...register('lastName')}
+              sx={{
+                border: '1px solid #e4ebe4',
+                color: '#001E00',
+                '&:hover': {
+                  borderColor: '#cbcecb',
+                },
+              }}
+            />
+            {errors.lastName?.message && (
+              <p className='error'>{errors.lastName?.message}</p>
+            )}
+          </Box>
+        </Box>
+        <Box sx={{ width: '100%' }}>
+          <Input
+            {...register('email')}
+            placeholder='Work email address'
+            sx={{
+              width: '100%',
+              border: '1px solid #e4ebe4',
+              color: '#001E00',
+              '&:hover': {
+                borderColor: '#cbcecb',
               },
-          }}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-          value={country}
-          onChange={handleChange}>
-          <MenuItem value=''>
-            <em>Select a country</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
+            }}
+          />
+          {errors.email?.message && (
+            <p className='error'>{errors.email?.message}</p>
+          )}
+        </Box>
+        <Box sx={{ width: '100%' }}>
+          <Input
+            {...register('password')}
+            type={showPassword ? 'text' : 'password'}
+            sx={{
+              width: '100%',
+              border: '1px solid #e4ebe4',
+              color: '#001E00',
+              '&:hover': {
+                borderColor: '#cbcecb',
+              },
+            }}
+            placeholder='Password (8 or more characters)'
+            endDecorator={
+              showPassword ? (
+                <VisibilityIcon
+                  onClick={handleShowPassword}
+                  sx={{ color: '#001E00', width: '1.2rem' }}
+                />
+              ) : (
+                <VisibilityOffIcon
+                  onClick={handleShowPassword}
+                  sx={{ color: '#001E00', width: '1.2rem' }}
+                />
+              )
+            }
+          />
+          {errors.password?.message && (
+            <p className='error'>{errors.password?.message}</p>
+          )}
+        </Box>
+        <Box sx={{ width: '100%' }}>
+          <Autocomplete
+            id='country-select-demo'
+            options={countries}
+            sx={{ width: '100%' }}
+            autoHighlight
+            getOptionLabel={(option: ICountry) => option?.name}
+            renderInput={(params) => (
+              <TextField
+                {...register('country')}
+                {...params}
+                label='Select a country'
+              />
+            )}
+          />
+          {errors.country?.message && (
+            <p className='error'>{errors.country?.message}</p>
+          )}
+        </Box>
         <FormGroup
           sx={{
             width: '100%',
@@ -256,13 +295,19 @@ const SignUpForm = () => {
                 color: '#13a000',
               },
           }}>
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label='
+          <Box sx={{ width: '100%' }}>
+            <FormControlLabel
+              control={<Checkbox {...register('agree')} />}
+              label='
             Yes, I understand and agree to the Upwork Terms of Service , including the User Agreement and Privacy Policy .'
-          />
+            />
+            {errors.agree?.message && (
+              <p className='error'>{errors.agree?.message}</p>
+            )}
+          </Box>
         </FormGroup>
         <Button
+          type='submit'
           sx={{
             fontSize: '14px',
             lineHeight: '20px',

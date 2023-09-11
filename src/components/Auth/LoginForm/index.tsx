@@ -1,11 +1,58 @@
+/* eslint-disable eqeqeq */
 import { Input, Button } from '@mui/joy';
 import { Box, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import './style.css';
 import { FcGoogle } from 'react-icons/fc';
 import AppleIcon from '@mui/icons-material/Apple';
+import { useState } from 'react';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { LoginSchema } from '../../../validation';
+import useGetAllUsers from '../../../hooks/useGetAllUsers';
+import {
+  fetchFoundEmail,
+  fetchFoundPassword,
+  showDialog,
+} from '../../../constants';
+import { ILogin, IUser } from '../../../@types/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../redux/store';
+import { login } from '../../../redux/slices/AuthSlice';
 
 const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { users } = useGetAllUsers();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(LoginSchema),
+  });
+
+  const handleShowPassword = (): void => {
+    setShowPassword(!showPassword);
+  };
+  let comparePassword: boolean;
+  const onSubmit = (body: ILogin) => {
+    const found: IUser | null = fetchFoundEmail(body, users);
+    if (found)
+      comparePassword = fetchFoundPassword(body.password, found.password);
+    if (comparePassword == true) {
+      showDialog('success', 'Login successfully', 'success');
+      dispatch(login(found));
+      navigate('/', { replace: true });
+    } else {
+      showDialog('error', 'Login failed', 'error');
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -34,6 +81,8 @@ const LoginForm = () => {
             justifyContent: 'center',
           }}>
           <Box
+            component={'form'}
+            onSubmit={handleSubmit(onSubmit)}
             sx={{
               width: 370,
               padding: '0 15px',
@@ -53,23 +102,60 @@ const LoginForm = () => {
               }}>
               Login in to Upwork
             </Typography>
-
-            <Input
-              autoFocus={false}
-              className='input-group'
-              sx={{
-                border: '2px solid #e4ebe4',
-                color: '#001E00',
-                '&:hover': {
-                  borderColor: '#cbcecb',
-                },
-              }}
-              placeholder='Username or Email'
-              startDecorator={
-                <PersonIcon sx={{ color: '#001E00', width: '1.2rem' }} />
-              }
-            />
+            <Box sx={{ width: '100%' }}>
+              <Input
+                {...register('email')}
+                autoFocus={false}
+                className='input-group'
+                sx={{
+                  border: '2px solid #e4ebe4',
+                  color: '#001E00',
+                  '&:hover': {
+                    borderColor: '#cbcecb',
+                  },
+                }}
+                placeholder='Username or Email'
+                startDecorator={
+                  <PersonIcon sx={{ color: '#001E00', width: '1.2rem' }} />
+                }
+              />
+              {errors.email?.message && (
+                <p className='error'>{errors.email?.message}</p>
+              )}
+            </Box>
+            <Box sx={{ width: '100%' }}>
+              <Input
+                {...register('password')}
+                type={showPassword ? 'text' : 'password'}
+                sx={{
+                  width: '100%',
+                  border: '1px solid #e4ebe4',
+                  color: '#001E00',
+                  '&:hover': {
+                    borderColor: '#cbcecb',
+                  },
+                }}
+                placeholder='Password (8 or more characters)'
+                startDecorator={
+                  showPassword ? (
+                    <VisibilityIcon
+                      onClick={handleShowPassword}
+                      sx={{ color: '#001E00', width: '1.2rem' }}
+                    />
+                  ) : (
+                    <VisibilityOffIcon
+                      onClick={handleShowPassword}
+                      sx={{ color: '#001E00', width: '1.2rem' }}
+                    />
+                  )
+                }
+              />
+              {errors.password?.message && (
+                <p className='error'>{errors.password?.message}</p>
+              )}
+            </Box>
             <Button
+              type='submit'
               className='login_button'
               sx={{
                 backgroundColor: '#108a00',
@@ -150,20 +236,22 @@ const LoginForm = () => {
           <Typography className='line' variant='body2' component={'div'}>
             Don't have an Upwork account?
           </Typography>
-          <Button
-            sx={{
-              width: '218px',
-              backgroundColor: '#fff',
-              color: '#108a00',
-              borderRadius: '2rem',
-              border: '1px solid #108a00',
-              padding: '0',
-              '&:hover': {
+          <Link to='/signup'>
+            <Button
+              sx={{
+                width: '218px',
                 backgroundColor: '#fff',
-              },
-            }}>
-            Sign Up
-          </Button>
+                color: '#108a00',
+                borderRadius: '2rem',
+                border: '1px solid #108a00',
+                padding: '0',
+                '&:hover': {
+                  backgroundColor: '#fff',
+                },
+              }}>
+              Sign Up
+            </Button>
+          </Link>
         </Box>
       </Box>
     </Box>
