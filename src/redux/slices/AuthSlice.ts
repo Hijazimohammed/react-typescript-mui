@@ -44,14 +44,14 @@ export const authSlice: any = createSlice({
         email: '',
         password: '',
       };
-      localStorage.removeItem('isAuth');
+      localStorage.setItem('isAuth', 'false');
       state.loading = false;
       state.error = '';
     },
   },
 });
 
-const { setLoading, setError, authorize, logout } = authSlice.actions;
+export const { setLoading, setError, authorize, logout } = authSlice.actions;
 
 export const signUp = (body: IUser) => async (dispatch: AppDispatch) => {
   try {
@@ -67,4 +67,10 @@ export const login = (body: IUser | null) => async (dispatch: AppDispatch) => {
   dispatch(setLoading(true));
   dispatch(authorize(body));
 };
+export const signOut = () => async (dispatch: AppDispatch) => {
+  dispatch(setLoading(true));
+  dispatch(logout());
+  showDialog('success', 'Logout successfully', 'success');
+};
+
 export default authSlice.reducer;

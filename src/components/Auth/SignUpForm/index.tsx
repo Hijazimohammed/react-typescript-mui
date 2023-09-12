@@ -4,12 +4,10 @@ import { FcGoogle } from 'react-icons/fc';
 import AppleIcon from '@mui/icons-material/Apple';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATHS } from '../../../constants/Paths';
 import { useForm } from 'react-hook-form';
@@ -26,7 +24,6 @@ import bcrypt from 'bcryptjs-react';
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [country, setCountry] = useState(String);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

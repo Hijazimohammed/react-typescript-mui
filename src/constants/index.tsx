@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import Swal from 'sweetalert2';
 import { ILogin, IUser } from '../@types/auth';
 import bcrypt from 'bcryptjs-react';
