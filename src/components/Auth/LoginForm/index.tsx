@@ -16,7 +16,7 @@ import {
   fetchFoundEmail,
   fetchFoundPassword,
   showDialog,
-} from '../../../constants';
+} from '../../../utils';
 import { ILogin, IUser } from '../../../@types/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../redux/store';

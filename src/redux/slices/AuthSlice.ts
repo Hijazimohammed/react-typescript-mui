@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch } from '../store';
 import axios from 'axios';
 import { AUTH_API } from '../../config/api';
-import { showDialog } from '../../constants';
+import { showDialog } from '../../utils';
 
 const initialState: IAuth = {
   isAuth: false,
