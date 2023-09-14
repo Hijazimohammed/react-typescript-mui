@@ -3,7 +3,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 const EmptySavedJobs = () => {
   return (
-    <Box sx={{ width: '100%', flexGrow: 1 }}>
+    <Box sx={{ width: '100%', flexGrow: 1, padding: '1rem' }}>
       <Grid container spacing={2}>
         <Grid
           xs={12}

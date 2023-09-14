@@ -15,7 +15,7 @@ function CustomTabPanel(props: ITabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}>
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -41,12 +41,13 @@ const TabsSection = () => {
     <Stack
       direction='column'
       mt='1rem'
-      sx={{ border: '1px solid #ddd', borderRadius: '1rem', padding: '1rem' }}>
-      <Typography variant={'h3'} sx={{ fontSize: '1.3rem' }}>
+      sx={{ border: '1px solid #ddd', borderRadius: '1rem' }}>
+      <Typography variant={'h3'} sx={{ fontSize: '1.3rem', padding: '1rem' }}>
         Jobs you might like
       </Typography>
       <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box
+          sx={{ borderBottom: 1, borderColor: 'divider', padding: '0 1rem' }}>
           <Tabs
             sx={{
               '& .css-1p9i4sw-MuiButtonBase-root-MuiTab-root.Mui-selected': {
@@ -84,6 +85,7 @@ const TabsSection = () => {
               letterSpacing: '.6px',
               fontWeight: 500,
               paddingBottom: '1rem',
+              padding: '1rem 0 1rem 1rem',
             }}>
             Browse jobs that match your experience to a client's hiring
             preferences. Ordered by most relevant.
@@ -97,12 +99,12 @@ const TabsSection = () => {
               fontSize: '12px',
               letterSpacing: '.6px',
               fontWeight: 500,
-              paddingBottom: '1rem',
+              padding: '1rem 0 1rem 1rem',
             }}>
             Browse the most recent jobs that match your skills and profile
             description to the skills clients are looking for.
           </Typography>
-          Item Two
+          <JopDescription />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
           <EmptySavedJobs />

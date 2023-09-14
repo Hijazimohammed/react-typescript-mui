@@ -10,7 +10,10 @@ const Router = () => {
     <Routes>
       <Route path={PATHS.AUTH.LOGIN} element={<Login />} />
       <Route path={PATHS.AUTH.SIGNUP} element={<SignUp />} />
-      <Route path={PATHS.HOME} element={<HomePage />} />
+      <Route path={PATHS.HOME.ROOT}>
+        <Route index element={<HomePage />} />
+        <Route path={PATHS.HOME.DETAILS} element={<h1>welcome</h1>} />
+      </Route>
       <Route path={PATHS.ERRORS.NOT_FOUND} element={<NotFoundPage />} />
       <Route
         path={'*'}

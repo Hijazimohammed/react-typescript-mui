@@ -3,7 +3,10 @@ export const PATHS = {
     LOGIN: '/login',
     SIGNUP: '/signup',
   },
-  HOME: '/',
+  HOME: {
+    ROOT: '/',
+    DETAILS: '/details/:id',
+  },
   ERRORS: {
     NOT_FOUND: '404',
   },
