@@ -4,6 +4,7 @@ import Login from '../pages/Auth/Login';
 import SignUp from '../pages/Auth/Singup';
 import HomePage from '../pages/HomePage';
 import NotFoundPage from '../pages/NotFoundPage';
+import SingleJop from '../pages/SingleJob';
 
 const Router = () => {
   return (
@@ -12,7 +13,8 @@ const Router = () => {
       <Route path={PATHS.AUTH.SIGNUP} element={<SignUp />} />
       <Route path={PATHS.HOME.ROOT}>
         <Route index element={<HomePage />} />
-        <Route path={PATHS.HOME.DETAILS} element={<h1>welcome</h1>} />
+        <Route path={PATHS.HOME.DETAILS} element={<HomePage />} />
+        <Route path={PATHS.HOME.SINGLE} element={<SingleJop />} />
       </Route>
       <Route path={PATHS.ERRORS.NOT_FOUND} element={<NotFoundPage />} />
       <Route
