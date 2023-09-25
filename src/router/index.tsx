@@ -5,6 +5,7 @@ import SignUp from '../pages/Auth/Singup';
 import HomePage from '../pages/HomePage';
 import NotFoundPage from '../pages/NotFoundPage';
 import SingleJop from '../pages/SingleJob';
+import ProfilePage from '../pages/ProfilePage';
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
         <Route index element={<HomePage />} />
         <Route path={PATHS.HOME.DETAILS} element={<HomePage />} />
         <Route path={PATHS.HOME.SINGLE} element={<SingleJop />} />
+        <Route path={PATHS.HOME.PROFILE} element={<ProfilePage />} />
       </Route>
       <Route path={PATHS.ERRORS.NOT_FOUND} element={<NotFoundPage />} />
       <Route

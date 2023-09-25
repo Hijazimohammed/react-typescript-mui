@@ -7,6 +7,7 @@ export const PATHS = {
     ROOT: '/',
     DETAILS: '/details/:id',
     SINGLE: '/job/:id',
+    PROFILE: '/profile',
   },
   ERRORS: {
     NOT_FOUND: '404',

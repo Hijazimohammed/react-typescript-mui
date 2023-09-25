@@ -1,26 +1,44 @@
 import React from 'react';
-import { Stack, Divider, Typography, Rating, TextField } from '@mui/material';
+import {
+  Stack,
+  Divider,
+  Typography,
+  Rating,
+  TextField,
+  Snackbar,
+} from '@mui/material';
 import { Button } from '@mui/joy';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FlagIcon from '@mui/icons-material/Flag';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { Link, useLocation } from 'react-router-dom';
+import { PATHS } from '../../../../../../constants/Paths';
+
+const URL: string = window.location.href;
 
 const RightSection = () => {
+  const location = useLocation();
+  const copySubmit = () => {};
   return (
     <Stack spacing={1} sx={{ flex: 1, padding: '2rem 1rem' }}>
-      <Button
-        className='login_button'
-        sx={{
-          backgroundColor: '#108a00',
-          color: '#fff',
-          borderRadius: '2rem',
-          textTransform: 'capitalize',
-          '&:hover': {
-            backgroundColor: '#14a800',
-          },
-        }}>
-        Apply now
-      </Button>
+      <Link
+        style={{ width: '100%' }}
+        to={PATHS.HOME.SINGLE.replace(':id', '1')}>
+        <Button
+          className='login_button'
+          sx={{
+            width: '100%',
+            backgroundColor: '#108a00',
+            color: '#fff',
+            borderRadius: '2rem',
+            textTransform: 'capitalize',
+            '&:hover': {
+              backgroundColor: '#14a800',
+            },
+          }}>
+          Apply now
+        </Button>
+      </Link>
       <Button
         startDecorator={<FavoriteBorderIcon />}
         sx={{
@@ -271,7 +289,7 @@ const RightSection = () => {
         }}
         disabled
         id='filled-disabled'
-        defaultValue='Hello World'
+        defaultValue={URL}
         variant='filled'
       />
       <Typography
@@ -287,7 +305,7 @@ const RightSection = () => {
             textDecoration: 'underline',
           },
         }}>
-        Copy link
+        <span onClick={() => copySubmit()}>Copy link</span>
       </Typography>
     </Stack>
   );

@@ -1,39 +1,54 @@
-import { Avatar, Box, Stack, Typography, Divider, Slider } from '@mui/material';
+import React from 'react';
+import { Box, Stack, Typography, Divider, Slider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link } from 'react-router-dom';
-import { PATHS } from '../../../../constants/Paths';
 
 const Sidebar = () => {
   return (
     <Stack
       direction='column'
-      alignItems={'center'}
       spacing={2}
       sx={{
         width: '100%',
-        border: '1px solid #ddd',
-        borderRadius: '1rem',
         padding: '1rem 0',
       }}>
-      <Stack direction='column' alignItems='center' spacing={1}>
-        <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-        <Box textAlign={'center'}>
-          <Link to={PATHS.HOME.PROFILE}>
-            <Typography
-              variant='body1'
+      <Stack
+        direction='column'
+        spacing={1}
+        sx={{
+          padding: '0 1rem',
+        }}>
+        <Box>
+          <Typography
+            variant='body1'
+            sx={{
+              fontSize: '16px',
+              fontWeight: '600',
+              color: '#001e00',
+              display: 'flex',
+              gap: '1rem',
+            }}>
+            View profile
+            <Box
               sx={{
-                fontSize: '16px',
-                fontWeight: '500',
-
-                color: '#001e00',
-                cursor: 'pointer',
+                maxWidth: '30px',
+                maxHeight: '30px',
+                padding: '3px',
+                borderRadius: '50%',
+                border: '1px solid #ddd',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 '&:hover': {
-                  color: '#14a800',
+                  background: '#ddd',
                 },
               }}>
-              Mohammed Hijazi
-            </Typography>
-          </Link>
+              <EditIcon
+                sx={{
+                  color: '#14a800',
+                }}
+              />
+            </Box>
+          </Typography>
           <Typography
             sx={{ fontSize: '12px', color: '#001e00' }}
             variant='body2'>
@@ -51,32 +66,41 @@ const Sidebar = () => {
             sx={{
               fontSize: '12px',
               color: '#001e00',
+              fontWeight: '700',
               cursor: 'pointer',
               '&:hover': {
                 color: '#14a800',
-                textDecoration: 'underline',
               },
             }}
             variant='body2'>
             Profile Completeness:{' '}
           </Typography>
-
-          <Slider
-            sx={{
-              '& .css-eg0mwd-MuiSlider-thumb': {
-                display: 'none',
-              },
-              '& .css-jiy7vy-MuiSlider-root': {
-                width: '100%',
-              },
-              '& .css-1gv0vcd-MuiSlider-track': {
-                backgroundColor: '#14a800',
-              },
-            }}
-            disabled
-            value={100}
-            aria-label='Disabled slider'
-          />
+          <Stack direction='row' alignItems='center' spacing={1}>
+            <Slider
+              sx={{
+                '& .css-eg0mwd-MuiSlider-thumb': {
+                  display: 'none',
+                },
+                '& .css-jiy7vy-MuiSlider-root': {
+                  width: '100%',
+                },
+                '& .css-1gv0vcd-MuiSlider-track': {
+                  backgroundColor: '#14a800',
+                },
+              }}
+              disabled
+              value={100}
+              aria-label='Disabled slider'
+            />
+            <Typography
+              sx={{
+                fontSize: '13px',
+                color: '#001e00',
+                fontWeight: '500',
+              }}>
+              100%
+            </Typography>
+          </Stack>
         </Box>
         <Box sx={{ width: '100%' }}>
           <Typography
@@ -107,8 +131,9 @@ const Sidebar = () => {
             </Typography>
             <Box
               sx={{
-                width: '2rem',
-                height: '2rem',
+                maxWidth: '30px',
+                maxHeight: '30px',
+                padding: '3px',
                 borderRadius: '50%',
                 border: '1px solid #ddd',
                 display: 'flex',
@@ -138,8 +163,9 @@ const Sidebar = () => {
             </Typography>
             <Box
               sx={{
-                width: '2rem',
-                height: '2rem',
+                maxWidth: '30px',
+                maxHeight: '30px',
+                padding: '3px',
                 borderRadius: '50%',
                 border: '1px solid #ddd',
                 display: 'flex',
@@ -179,8 +205,9 @@ const Sidebar = () => {
             </Typography>
             <Box
               sx={{
-                width: '2rem',
-                height: '2rem',
+                maxWidth: '30px',
+                maxHeight: '30px',
+                padding: '3px',
                 borderRadius: '50%',
                 border: '1px solid #ddd',
                 display: 'flex',
@@ -220,8 +247,9 @@ const Sidebar = () => {
             </Typography>
             <Box
               sx={{
-                width: '2rem',
-                height: '2rem',
+                maxWidth: '30px',
+                maxHeight: '30px',
+                padding: '3px',
                 borderRadius: '50%',
                 border: '1px solid #ddd',
                 display: 'flex',
@@ -262,8 +290,9 @@ const Sidebar = () => {
             </Typography>
             <Box
               sx={{
-                width: '2rem',
-                height: '2rem',
+                maxWidth: '30px',
+                maxHeight: '30px',
+                padding: '3px',
                 borderRadius: '50%',
                 border: '1px solid #ddd',
                 display: 'flex',

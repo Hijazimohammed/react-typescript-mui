@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 
 const JopDescription = () => {
   return (
-    <Box sx={{ paddingBottom: '4rem' }}>
+    <Box sx={{}}>
       <JobItem />
       <JobItem />
       <JobItem />
